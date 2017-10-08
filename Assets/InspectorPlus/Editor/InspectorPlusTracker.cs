@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using System.Reflection;
 using System;
+using UnityEditorInternal;
 
 [Serializable]
 public class InspectorPlusTracker {
@@ -24,8 +25,8 @@ public class InspectorPlusTracker {
 	[SerializeField] protected List<string> IgnoredProperties = new List<string>();
 
 	double m_lastTime;
-	public string group;
 	bool m_dirty;
+
 
 	public bool dirty {
 		get {
@@ -36,16 +37,11 @@ public class InspectorPlusTracker {
 		set { m_dirty = value; }
 	}
 
-	Texture2D m_arrowUp;
-	Texture2D m_arrowDown;
 	string m_filePath;
 	bool m_first = true;
 
-	public InspectorPlusTracker(string _name, string _group, Texture2D up, Texture2D down, string _filePath) {
+	public InspectorPlusTracker(string _name, string _filePath) {
 		name = _name;
-		group = _group;
-		m_arrowUp = up;
-		m_arrowDown = down;
 		m_filePath = _filePath;
 		UpdateFields();
 	}
@@ -166,64 +162,84 @@ public class InspectorPlusTracker {
 		}
 	}
 
-	public void DrawGUI() {
-		float buttonWidth = 23.0f;
+	ReorderableList list;
 
+	public void DrawGUI() {
 		UpdateFields();
 		UpdateVarLevel();
 
-		for (int i = 0; i < m_vars.Count; ++i) {
-			InspectorPlusVar ipv = m_vars[i];
-			EditorGUILayout.BeginHorizontal();
+		if (list == null) {
+			list = new ReorderableList(m_vars, typeof(InspectorPlusVar));
+			list.drawElementCallback += DrawElement;
 
-			GUILayout.Space(5.0f);
+			list.displayAdd = false;
+			list.displayRemove = false;
+			list.elementHeightCallback += ElementHeightCallback;
+			list.elementHeight += 15.0f;
+			list.headerHeight = 0;
+		}
 
-			GUILayout.BeginHorizontal(GUILayout.Width(370.0f));
+		list.showDefaultBackground = false;
+		list.DoLayoutList();
+	}
 
-			GUILayout.Space(ipv.toggleLevel * 15.0f);
+	float ElementHeightCallback(int index) {
+		InspectorPlusVar ipv = m_vars[index];
+		return EditorGUIUtility.singleLineHeight + 10.0f + ipv.space;
+	}
 
-			ipv.active = GUILayout.Toggle(ipv.active, "");
-			GUI.enabled = ipv.active;
-			ipv.dispName = GUILayout.TextField(ipv.dispName, GUILayout.Width(100.0f));
-			GUILayout.Space(5.0f);
-			GUI.enabled = !ipv.fixedTip;
-			ipv.hasTooltip = GUILayout.Toggle(ipv.hasTooltip, "");
-			GUI.enabled = ipv.hasTooltip && GUI.enabled;
-			ipv.tooltip = GUILayout.TextField(ipv.tooltip, GUILayout.MinWidth(100.0f));
-			GUILayout.FlexibleSpace();
+
+	Rect currentRect;
+	public Rect GetRect(float width) {
+		Rect newRect = currentRect;
+		newRect.width = width;
+		currentRect.x += width;
+		return newRect;
+	}
+
+	public void Line(float height) {
+		currentRect.x = 0;
+		currentRect.y += height;
+	}
+
+	void DrawElement(Rect rect, int i, bool isActive, bool isFocused) {
+		InspectorPlusVar ipv = m_vars[i];
+
+		currentRect = rect;
+		currentRect.height = EditorGUIUtility.singleLineHeight;
+
+		GetRect(ipv.toggleLevel * 15.0f);
+		
+		ipv.active = GUI.Toggle(GetRect(15.0f), ipv.active, "");
+
+		GUI.enabled = ipv.active;
+		ipv.dispName = GUI.TextField(GetRect(100.0f), ipv.dispName);
+
+		GetRect(5.0f);
+
+		GUI.enabled = !ipv.fixedTip;
+		ipv.hasTooltip = GUI.Toggle(GetRect(40.0f), ipv.hasTooltip, "");
+		GUI.enabled = ipv.hasTooltip && GUI.enabled;
+		ipv.tooltip = GUI.TextField(GetRect(100.0f), ipv.tooltip);
+
+		GUI.enabled = true;
+
+
+		GUI.enabled = i - 1 >= 0;
+
+		GUI.enabled = true;
+		ipv.canWrite = GUI.Toggle(GetRect(15.0f), ipv.canWrite, new GUIContent(""));
+
+		ipv.DrawFieldGUI(this);
+		ipv.DrawDragBox(this);
+
+		if (!ipv.active) {
 			GUI.enabled = true;
+		}
 
-			GUILayout.EndHorizontal();
-
-			GUI.enabled = (i - 1) >= 0;
-			if (GUILayout.Button(m_arrowUp, "ButtonLeft", GUILayout.Width(buttonWidth), GUILayout.Height(20.0f))) {
-				InspectorPlusVar temp = ipv;
-				m_vars[i] = m_vars[i - 1];
-				m_vars[i - 1] = temp;
-				UpdateTarget();
-			}
-
-			GUI.enabled = i + 1 < m_vars.Count;
-			if (GUILayout.Button(m_arrowDown, "ButtonRight", GUILayout.Width(buttonWidth), GUILayout.Height(20.0f))) {
-				InspectorPlusVar temp = ipv;
-				m_vars[i] = m_vars[i + 1];
-				m_vars[i + 1] = temp;
-				UpdateTarget();
-			}
-
-			GUI.enabled = true;
-			ipv.canWrite = GUILayout.Toggle(ipv.canWrite, new GUIContent(""));
-
-			ipv.DrawFieldGUI();
-
-			if (!ipv.active)
-				GUI.enabled = true;
-
-
-			if (GUI.changed) {
-				UpdateTarget();
-				dirty = true;
-			}
+		if (GUI.changed) {
+			UpdateTarget();
+			dirty = true;
 		}
 	}
 }

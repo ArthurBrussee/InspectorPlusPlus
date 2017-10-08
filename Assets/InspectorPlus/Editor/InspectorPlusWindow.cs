@@ -39,12 +39,12 @@ public class InspectorPlusWindow : EditorWindow {
 		GetWindow(typeof(InspectorPlusWindow));
 	}
 
-	void CreateNew(string name, string path, Type t, string group = "") {
+	void CreateNew(string name, string path, Type t) {
 		if (manager.GetTracker(name) != null) {
 			return;
 		}
 
-		manager.AddInspector(name, path, group);
+		manager.AddInspector(name, path);
 	}
 
 	void OnSelectionChange() {
@@ -130,15 +130,7 @@ Your inspector has been saved to " + n + @"InspectorPlus.cs. Feel free to distri
 		openScrollPosition = GUILayout.BeginScrollView(openScrollPosition, false, false, GUIStyle.none, GUI.skin.GetStyle("verticalScrollbar"), GUILayout.Width(700.0f));
 		
 		//draw existing editors
-		for (int i = 0; i < manager.groups.Count; i += 1) {
-			if (manager.groups[i] != "") {
-				manager.groupOpen[i] = EditorGUILayout.Foldout(manager.groupOpen[i], manager.groups[i]);
-			}
-
-			if (manager.groups[i] == "" || manager.groupOpen[i]) {
-				DrawOpenNameList(manager.GetGroup(manager.groups[i], searchFilter));
-			}
-		}
+		DrawOpenNameList(manager.GetNames(searchFilter));
 
 		GUILayout.Space(20.0f);
 

@@ -128,145 +128,152 @@ public class InspectorPlusVar {
 		setName = true;
 	}
 
-	public void DrawFieldGUI() {
+	public void DrawFieldGUI(InspectorPlusTracker gui) {
 		if (canWrite) {
-			GUILayout.Space(30.0f);
+			gui.GetRect(30.0f);
+
 			if (type == typeof(float).Name) {
-				GUILayout.Label("Limit: ");
-				limitType = (LimitType) EditorGUILayout.EnumPopup(limitType);
+				GUI.Label(gui.GetRect(80.0f), "Limit: ");
+				limitType = (LimitType) EditorGUI.EnumPopup(gui.GetRect(80.0f), limitType);
 
 				bool oldEnabled = GUI.enabled;
 
 				GUI.enabled = limitType == LimitType.Min || limitType == LimitType.Range;
-				min = EditorGUILayout.FloatField(min, GUILayout.Width(80.0f));
+				min = EditorGUI.FloatField(gui.GetRect(80.0f), min);
 
 				GUI.enabled = limitType == LimitType.Max || limitType == LimitType.Range;
-				max = EditorGUILayout.FloatField(max, GUILayout.Width(80.0f));
+				max = EditorGUI.FloatField(gui.GetRect(80.0f), max);
 
 				if (limitType == LimitType.Range) {
-					GUILayout.Label("ProgressBar: ");
-					progressBar = GUILayout.Toggle(progressBar, "");
+					GUI.Label(gui.GetRect(80.0f), "ProgressBar: ");
+					progressBar = GUI.Toggle(gui.GetRect(80.0f), progressBar, "");
 				}
 
 				GUI.enabled = oldEnabled;
 			}
 			else if (type == typeof(int).Name) {
-				GUILayout.Label("Limit: ");
-				limitType = (LimitType) EditorGUILayout.EnumPopup(limitType);
+				GUI.Label(gui.GetRect(80.0f), "Limit: ");
+				limitType = (LimitType) EditorGUI.EnumPopup(gui.GetRect(80.0f), limitType);
 
 				bool oldEnabled = GUI.enabled;
 
 				GUI.enabled = limitType == LimitType.Min || limitType == LimitType.Range;
-				iMin = EditorGUILayout.IntField(iMin, GUILayout.Width(80.0f));
+				iMin = EditorGUI.IntField(gui.GetRect(80.0f), iMin);
 
 				GUI.enabled = limitType == LimitType.Max || limitType == LimitType.Range;
-				iMax = EditorGUILayout.IntField(iMax, GUILayout.Width(80.0f));
+				iMax = EditorGUI.IntField(gui.GetRect(80.0f), iMax);
 
 				if (limitType == LimitType.Range) {
-					GUILayout.Label("ProgressBar: ");
-					progressBar = GUILayout.Toggle(progressBar, "");
+					GUI.Label(gui.GetRect(80.0f), "ProgressBar: ");
+					progressBar = GUI.Toggle(gui.GetRect(80.0f), progressBar, "");
 				}
 
 				GUI.enabled = oldEnabled;
 			}
 			else if (type == typeof(Vector3).Name || type == typeof(Vector2).Name) {
-				GUILayout.Label("Draw: ");
-				vectorDrawType = (VectorDrawType) EditorGUILayout.EnumPopup(vectorDrawType);
+				GUI.Label(gui.GetRect(80.0f), "Draw: ");
+				vectorDrawType = (VectorDrawType) EditorGUI.EnumPopup(gui.GetRect(80.0f), vectorDrawType);
 
 				bool oldEnabled = GUI.enabled;
 
 				GUI.enabled = vectorDrawType != VectorDrawType.None;
-				GUILayout.Label("Relative: ");
-				relative = GUILayout.Toggle(relative, "");
+				GUI.Label(gui.GetRect(80.0f), "Relative: ");
+				relative = GUI.Toggle(gui.GetRect(80.0f), relative, "");
 
 				if (vectorDrawType == VectorDrawType.Direction) {
-					GUILayout.Label("Scale: ");
-					scale = GUILayout.Toggle(scale, "");
+					GUI.Label(gui.GetRect(80.0f), "Scale: ");
+					scale = GUI.Toggle(gui.GetRect(80.0f), scale, "");
 				}
 
 				if (vectorDrawType == VectorDrawType.Scale || vectorDrawType == VectorDrawType.Rotation) {
-					GUILayout.Label("Offset: ");
-					offset.x = EditorGUILayout.FloatField(offset.x);
-					offset.y = EditorGUILayout.FloatField(offset.y);
-					offset.z = EditorGUILayout.FloatField(offset.z);
+					GUI.Label(gui.GetRect(80.0f), "Offset: ");
+					offset.x = EditorGUI.FloatField(gui.GetRect(40.0f), offset.x);
+					offset.y = EditorGUI.FloatField(gui.GetRect(40.0f), offset.y);
+					offset.z = EditorGUI.FloatField(gui.GetRect(40.0f), offset.z);
 				}
 
 				GUI.enabled = oldEnabled;
 			}
 			else if (type == typeof(Quaternion).Name) {
-				QuaternionHandle = GUILayout.Toggle(QuaternionHandle, new GUIContent("Draw handle"));
-				GUILayout.Space(20.0f);
+				QuaternionHandle = GUI.Toggle(gui.GetRect(80.0f), QuaternionHandle, new GUIContent("handle"));
+				gui.GetRect(20.0f);
+
 				GUI.enabled = QuaternionHandle;
-				GUILayout.Label("Offset: ");
-				offset.x = EditorGUILayout.FloatField(offset.x);
-				offset.y = EditorGUILayout.FloatField(offset.y);
-				offset.z = EditorGUILayout.FloatField(offset.z);
+				GUI.Label(gui.GetRect(80.0f), "Offset: ");
+				offset.x = EditorGUI.FloatField(gui.GetRect(40.0f), offset.x);
+				offset.y = EditorGUI.FloatField(gui.GetRect(40.0f), offset.y);
+				offset.z = EditorGUI.FloatField(gui.GetRect(40.0f), offset.z);
 				GUI.enabled = true;
 			}
 			else if (type == typeof(bool).Name) {
-				toggleStart = GUILayout.Toggle(toggleStart, "Toggle group");
+				toggleStart = GUI.Toggle(gui.GetRect(150.0f), toggleStart, "Toggle group");
 				GUI.enabled = toggleStart;
-				toggleSize = EditorGUI.IntSlider(GUILayoutUtility.GetRect(150.0f, 18.0f), toggleSize, 1,
+				toggleSize = EditorGUI.IntSlider(gui.GetRect(120.0f), toggleSize, 1,
 					Mathf.Max(1, (maxSize - index) - 1));
 				GUI.enabled = true;
 			}
 			else if (type == typeof(Texture).Name || type == typeof(Texture2D).Name) {
-				largeTexture = GUILayout.Toggle(largeTexture, new GUIContent("large preview"));
+				largeTexture = GUI.Toggle(gui.GetRect(120.0f), largeTexture, new GUIContent("large preview"));
 				GUI.enabled = largeTexture;
-				textureSize = EditorGUILayout.Slider(textureSize, 35.0f, 300.0f);
+				textureSize = EditorGUI.Slider(gui.GetRect(80.0f), textureSize, 35.0f, 300.0f);
 				GUI.enabled = true;
 			}
 			else if (type == typeof(string).Name) {
-				GUILayout.Label("Default text");
-				textFieldDefault = GUILayout.TextField(textFieldDefault, GUILayout.Width(180.0f));
+				GUI.Label(gui.GetRect(80.0f), "Default text");
+				textFieldDefault = GUI.TextField(gui.GetRect(180.0f), textFieldDefault);
 
-				GUILayout.Label("Text area: ");
-				textArea = GUILayout.Toggle(textArea, "");
-
+				GUI.Label(gui.GetRect(80.0f), "Text area: ");
+				textArea = GUI.Toggle(gui.GetRect(80.0f), textArea, "");
 			}
 		}
 		else {
-			GUILayout.Label("Read only");
+			GUI.Label(gui.GetRect(80.0f), "Read only");
 		}
+	}
 
-		GUILayout.FlexibleSpace();
-		EditorGUILayout.EndHorizontal();
+	public void DrawDragBox(InspectorPlusTracker gui) {
+		gui.Line(EditorGUIUtility.singleLineHeight + 5.0f);
+		var boxRect = gui.GetRect(900.0f);
+		boxRect.height = space;
+		GUI.Box(boxRect, "");
 
-		EditorGUILayout.BeginVertical("Box", GUILayout.Height(space), GUILayout.ExpandWidth(true));
+
+		gui.Line(0);
+
 		numSpace = Mathf.FloorToInt(space / 25.0f);
 		bool guiEnabled = GUI.enabled;
 
 		if (numSpace > 0) {
-			GUILayout.Space((space - numSpace * 25.0f) / 2.0f);
+			//GUI.Space((space - numSpace * 25.0f) / 2.0f);
 		}
 
 		for (int i = 0; i < numSpace; i += 1) {
 			GUI.enabled = true;
-			GUILayout.BeginHorizontal();
-			GUILayout.Space(10.0f);
-			labelEnabled[i] = GUILayout.Toggle(labelEnabled[i], "");
+
+			gui.GetRect(10.0f);
+			labelEnabled[i] = GUI.Toggle(gui.GetRect(40.0f), labelEnabled[i], "");
 
 			GUI.enabled = labelEnabled[i];
-			GUILayout.Label("Label ");
-			label[i] = EditorGUILayout.TextField("", label[i]);
-			labelBold[i] = GUILayout.Toggle(labelBold[i], new GUIContent("B"));
-			labelItalic[i] = GUILayout.Toggle(labelItalic[i], new GUIContent("I"));
-			GUILayout.Label("Align");
-			labelAlign[i] = EditorGUILayout.IntSlider(labelAlign[i], 0, 2, GUILayout.Width(150.0f));
-			GUILayout.Space(40.0f);
+			GUI.Label(gui.GetRect(80.0f), "Label ");
+			label[i] = EditorGUI.TextField(gui.GetRect(40.0f), "", label[i]);
+			labelBold[i] = GUI.Toggle(gui.GetRect(40.0f), labelBold[i], new GUIContent("B"));
+			labelItalic[i] = GUI.Toggle(gui.GetRect(40.0f), labelItalic[i], new GUIContent("I"));
+			GUI.Label(gui.GetRect(50.0f), "Align");
+			labelAlign[i] = EditorGUI.IntSlider(gui.GetRect(150.0f), labelAlign[i], 0, 2);
+			gui.GetRect(20.0f);
 			GUI.enabled = true;
 
 			for (int j = 0; j < 4; j += 1) {
 				GUI.enabled = true;
 				//button
-				buttonEnabled[i * 4 + j] = GUILayout.Toggle(buttonEnabled[i * 4 + j], "");
+				buttonEnabled[i * 4 + j] = GUI.Toggle(gui.GetRect(40.0f), buttonEnabled[i * 4 + j], "");
 
 				GUI.enabled = buttonEnabled[i * 4 + j];
-				GUILayout.Label("Button ");
-				buttonText[i * 4 + j] = EditorGUILayout.TextField("", buttonText[i * 4 + j], GUILayout.Width(50.0f));
+				GUI.Label(gui.GetRect(90.0f), "Button ");
+				buttonText[i * 4 + j] = EditorGUI.TextField(gui.GetRect(50.0f), "", buttonText[i * 4 + j]);
 
-				GUILayout.Label("Callback ");
-				buttonCallback[i * 4 + j] = EditorGUILayout.TextField("", buttonCallback[i * 4 + j], GUILayout.Width(50.0f));
+				GUI.Label(gui.GetRect(90.0f), "Callback ");
+				buttonCallback[i * 4 + j] = EditorGUI.TextField(gui.GetRect(50.0f), "", buttonCallback[i * 4 + j]);
 
 				bool buttonToCome = false;
 				for (int k = j; k < 4; k += 1)
@@ -276,34 +283,33 @@ public class InspectorPlusVar {
 				if (!buttonToCome || j == 3) {
 					GUI.enabled = true;
 					if (j > 1) {
-						buttonCondense[i] = GUILayout.Toggle(buttonCondense[i], new GUIContent("Condense"));
+						buttonCondense[i] = GUI.Toggle(gui.GetRect(40.0f), buttonCondense[i], new GUIContent("Condense"));
 					}
 					break;
 				}
 			}
 
-			GUILayout.FlexibleSpace();
-			GUILayout.EndHorizontal();
+			gui.Line(EditorGUIUtility.singleLineHeight);
 		}
 
-		if (numSpace > 0)
-			GUILayout.Space(-(space - numSpace * 25.0f) / 2.0f);
-		else
-			GUILayout.Space(space);
+		if (numSpace > 0) {
+			//GUI.Space(-(space - numSpace * 25.0f) / 2.0f);
+		}
+		else {
+			//GUI.Space(space);
+		}
 
 		GUI.enabled = guiEnabled;
 
-		GUILayoutUtility.GetRect(18.0f, -4.0f, "TextField");
-		EditorGUILayout.EndVertical();
 
-		GUILayoutUtility.GetRect(18, -10.0f - 10.0f, "TextField"); //really hack-ish, but we need to get some space back
-		Rect rect = GUILayoutUtility.GetRect(18, 10.0f, "TextField");
-		EditorGUIUtility.AddCursorRect(rect, MouseCursor.ResizeVertical);
+		boxRect.y += boxRect.height;
+		boxRect.height = 5.0f;
+
+		EditorGUIUtility.AddCursorRect(boxRect, MouseCursor.ResizeVertical);
 
 		if (Event.current.type == EventType.mouseDown) {
 			pressed = false;
-
-			if (rect.Contains(Event.current.mousePosition)) {
+			if (boxRect.Contains(Event.current.mousePosition)) {
 				startpos = Event.current.mousePosition;
 				pressed = true;
 			}
@@ -317,6 +323,8 @@ public class InspectorPlusVar {
 			space = Mathf.Clamp(space, 0.0f, 4 * 25.0f);
 
 			GUI.changed = true;
+
+			Event.current.Use();
 		}
 
 		if (Event.current.type == EventType.mouseUp) {
