@@ -51,8 +51,9 @@ public class InspectorPlusTracker {
 	}
 
 	public void UpdateFields() {
-		if (EditorApplication.timeSinceStartup - m_lastTime < 1.0 || AttachedType == null)
+		if (EditorApplication.timeSinceStartup - m_lastTime < 1.0 || AttachedType == null) {
 			return;
+		}
 
 		//UpdateFilePath();
 		int count = -1;
@@ -64,14 +65,17 @@ public class InspectorPlusTracker {
 		s.ReadSummaries(m_filePath);
 
 		foreach (FieldInfo fieldInfo in fields) {
-			if (IgnoredProperties.Contains(fieldInfo.Name))
+			if (IgnoredProperties.Contains(fieldInfo.Name)) {
 				continue;
+			}
 
-			if (fieldInfo.IsPrivate && !fieldInfo.IsDefined(typeof(SerializeField), false))
+			if (fieldInfo.IsPrivate && !fieldInfo.IsDefined(typeof(SerializeField), false)) {
 				continue;
+			}
 
-			if (fieldInfo.IsDefined(typeof(HideInInspector), false))
+			if (fieldInfo.IsDefined(typeof(HideInInspector), false)) {
 				continue;
+			}
 
 			++count;
 			varsCollected.Add(fieldInfo.Name);
@@ -79,10 +83,12 @@ public class InspectorPlusTracker {
 			if (VarsProcessed.Contains(fieldInfo.Name))
 				continue;
 
-			if (!m_first)
+			if (!m_first) {
 				VarsProcessed.Insert(count, fieldInfo.Name);
-			else
+			}
+			else {
 				VarsProcessed.Add(fieldInfo.Name);
+			}
 
 			InspectorPlusVar newVar = new InspectorPlusVar();
 			newVar.name = fieldInfo.Name;
@@ -91,10 +97,12 @@ public class InspectorPlusTracker {
 			newVar.isArray = fieldInfo.FieldType.IsArray;
 			newVar.classType = AttachedType.Name;
 
-			if (!m_first)
+			if (!m_first) {
 				m_vars.Insert(count, newVar);
-			else
+			}
+			else {
 				m_vars.Add(newVar);
+			}
 		}
 
 		foreach (FieldInfo fieldInfo in fields) {
@@ -115,17 +123,17 @@ public class InspectorPlusTracker {
 				ipv.tooltip = newTooltip;
 				ipv.fixedTip = true;
 			}
-			else
+			else {
 				ipv.fixedTip = false;
+			}
 		}
 
-		m_vars.RemoveAll(delegate(InspectorPlusVar v) { return (!varsCollected.Contains(v.name)); });
-		VarsProcessed.RemoveAll(delegate(string n) { return (!varsCollected.Contains(n)); });
+		m_vars.RemoveAll(v => (!varsCollected.Contains(v.name)));
+		VarsProcessed.RemoveAll(n => (!varsCollected.Contains(n)));
 
 		m_lastTime = EditorApplication.timeSinceStartup;
 		m_first = false;
 	}
-
 
 	public List<InspectorPlusVar> GetVars() {
 		return m_vars;
@@ -195,7 +203,7 @@ public class InspectorPlusTracker {
 				UpdateTarget();
 			}
 
-			GUI.enabled = (i + 1) < m_vars.Count;
+			GUI.enabled = i + 1 < m_vars.Count;
 			if (GUILayout.Button(m_arrowDown, "ButtonRight", GUILayout.Width(buttonWidth), GUILayout.Height(20.0f))) {
 				InspectorPlusVar temp = ipv;
 				m_vars[i] = m_vars[i + 1];

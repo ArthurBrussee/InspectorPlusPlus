@@ -121,21 +121,23 @@ Your inspector has been saved to " + n + @"InspectorPlus.cs. Feel free to distri
 
 		GUILayout.BeginHorizontal();
 		searchFilter = GUILayout.TextField(searchFilter, "SearchTextField", GUILayout.Width(670.0f));
-		if (GUILayout.Button("", "SearchCancelButton", GUILayout.Width(20.0f)))
+		if (GUILayout.Button("", "SearchCancelButton", GUILayout.Width(20.0f))) {
 			searchFilter = "";
+		}
 		GUILayout.EndHorizontal();
 
 		GUILayout.BeginVertical(GUILayout.Width(700.0f));
-		openScrollPosition = GUILayout.BeginScrollView(openScrollPosition, false, false, GUIStyle.none,
-			GUI.skin.GetStyle("verticalScrollbar"), GUILayout.Width(700.0f));
-
+		openScrollPosition = GUILayout.BeginScrollView(openScrollPosition, false, false, GUIStyle.none, GUI.skin.GetStyle("verticalScrollbar"), GUILayout.Width(700.0f));
+		
 		//draw existing editors
 		for (int i = 0; i < manager.groups.Count; i += 1) {
-			if (manager.groups[i] != "")
+			if (manager.groups[i] != "") {
 				manager.groupOpen[i] = EditorGUILayout.Foldout(manager.groupOpen[i], manager.groups[i]);
+			}
 
-			if (manager.groups[i] == "" || manager.groupOpen[i])
+			if (manager.groups[i] == "" || manager.groupOpen[i]) {
 				DrawOpenNameList(manager.GetGroup(manager.groups[i], searchFilter));
+			}
 		}
 
 		GUILayout.Space(20.0f);
