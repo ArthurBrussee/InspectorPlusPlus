@@ -56,9 +56,6 @@ public class InspectorPlusVar {
 
 	public bool[] labelEnabled = new bool[4];
 	public string[] label = new string[4];
-	public bool[] labelBold = new bool[4];
-	public bool[] labelItalic = new bool[4];
-	public int[] labelAlign = new int[4];
 
 	public bool[] buttonEnabled = new bool[16];
 	public string[] buttonText = new string[16];
@@ -244,7 +241,7 @@ public class InspectorPlusVar {
 		bool guiEnabled = GUI.enabled;
 
 		if (numSpace > 0) {
-			//GUI.Space((space - numSpace * 25.0f) / 2.0f);
+			gui.Line((space - numSpace * 25.0f) / 2.0f);
 		}
 
 		for (int i = 0; i < numSpace; i += 1) {
@@ -256,11 +253,6 @@ public class InspectorPlusVar {
 			GUI.enabled = labelEnabled[i];
 			GUI.Label(gui.GetRect(80.0f), "Label ");
 			label[i] = EditorGUI.TextField(gui.GetRect(40.0f), "", label[i]);
-			labelBold[i] = GUI.Toggle(gui.GetRect(40.0f), labelBold[i], new GUIContent("B"));
-			labelItalic[i] = GUI.Toggle(gui.GetRect(40.0f), labelItalic[i], new GUIContent("I"));
-			GUI.Label(gui.GetRect(50.0f), "Align");
-			labelAlign[i] = EditorGUI.IntSlider(gui.GetRect(150.0f), labelAlign[i], 0, 2);
-			gui.GetRect(20.0f);
 			GUI.enabled = true;
 
 			for (int j = 0; j < 4; j += 1) {
@@ -293,14 +285,12 @@ public class InspectorPlusVar {
 		}
 
 		if (numSpace > 0) {
-			//GUI.Space(-(space - numSpace * 25.0f) / 2.0f);
-		}
-		else {
-			//GUI.Space(space);
+			gui.Line(-(space - numSpace * 25.0f) / 2.0f);
+		} else {
+			gui.Line(space);
 		}
 
 		GUI.enabled = guiEnabled;
-
 
 		boxRect.y += boxRect.height;
 		boxRect.height = 5.0f;

@@ -476,35 +476,10 @@ public class InspectorPlus : Editor {
 				GUILayout.BeginHorizontal();
 
 				if (v.labelEnabled[j]) {
-					var boldItalic = new GUIStyle {margin = new RectOffset(5, 5, 5, 5)};
-
-					switch (v.labelAlign[j]) {
-						case 0:
-							boldItalic.alignment = TextAnchor.MiddleLeft;
-							break;
-						case 1:
-							boldItalic.alignment = TextAnchor.MiddleCenter;
-							break;
-						case 2:
-							boldItalic.alignment = TextAnchor.MiddleRight;
-							break;
-					}
-
-					if (v.labelBold[j] && v.labelItalic[j]) {
-						boldItalic.fontStyle = FontStyle.BoldAndItalic;
-					}
-					else if (v.labelBold[j]) {
-						boldItalic.fontStyle = FontStyle.Bold;
-					}
-					else if (v.labelItalic[j]) {
-						boldItalic.fontStyle = FontStyle.Italic;
-					}
-
-					GUILayout.Label(v.label[j], boldItalic);
-					boldItalic.alignment = TextAnchor.MiddleLeft;
+					GUILayout.Label(v.label[j]);
 				}
 
-				bool alignRight = (v.labelEnabled[j] && buttonLine);
+				bool alignRight = v.labelEnabled[j] && buttonLine;
 
 				if (!alignRight) {
 					GUILayout.EndHorizontal();
