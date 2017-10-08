@@ -97,10 +97,10 @@ public class InspectorPlusTracker
             if (ipv == null)
                 continue;
 
-            if (fieldInfo.IsDefined(typeof(InspectorTip), false))
+            if (fieldInfo.IsDefined(typeof(TooltipAttribute), false))
             {
-                object[] tips = fieldInfo.GetCustomAttributes(typeof(InspectorTip), false);
-                newTooltip = ((InspectorTip)tips[tips.Length - 1]).tip;
+                object[] tips = fieldInfo.GetCustomAttributes(typeof(TooltipAttribute), false);
+                newTooltip = ((TooltipAttribute)tips[tips.Length - 1]).tooltip;
             }
 
             if (newTooltip != "")
