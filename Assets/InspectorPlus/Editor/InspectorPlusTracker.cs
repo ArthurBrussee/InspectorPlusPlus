@@ -1,230 +1,222 @@
 ﻿#if UNITY_EDITOR
-
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using System.IO;
 using System.Reflection;
 using System;
 
+[Serializable]
+public class InspectorPlusTracker {
+	public string name;
 
+	Type AttachedType {
+		get {
+			Type t1 = InspectorPlusType.Get(name);
+			if (t1 != null)
+				return t1;
+			return Type.GetType(name);
+		}
+	}
 
-[System.Serializable]
-public class InspectorPlusTracker
-{
-    public string name;
-    public Type attachedType { get { Type t1 = InspectorPlusType.Get(name); if (t1 != null) return t1; return Type.GetType(name); } }
-    public List<InspectorPlusVar> vars = new List<InspectorPlusVar>();
+	List<InspectorPlusVar> m_vars = new List<InspectorPlusVar>();
 
-    [SerializeField] protected List<string> varsHad = new List<string>();
-    [SerializeField] protected List<string> ignoredProperties = new List<string>();
+	[SerializeField] protected List<string> VarsProcessed = new List<string>();
+	[SerializeField] protected List<string> IgnoredProperties = new List<string>();
 
-    protected double lastTime = 0.0;
-    public string group;
-    protected bool _dirty = false;
-    public bool dirty { get { bool temp = _dirty; _dirty = false; return temp; } set { _dirty = value; } }
+	double m_lastTime;
+	public string group;
+	bool m_dirty;
 
-    public Texture2D arrowUp;
-    public Texture2D arrowDown;
-	public string filePath;
-    protected bool first = true;
+	public bool dirty {
+		get {
+			bool temp = m_dirty;
+			m_dirty = false;
+			return temp;
+		}
+		set { m_dirty = value; }
+	}
 
-    public InspectorPlusTracker(string _name, string _group, Texture2D up, Texture2D down, string _filePath)
-    {
-        name = _name;
-        group = _group;
-        arrowUp = up;
-        arrowDown = down;
-		filePath = _filePath;
-        UpdateFields();
-    }
+	Texture2D m_arrowUp;
+	Texture2D m_arrowDown;
+	string m_filePath;
+	bool m_first = true;
 
-    public void UpdateFields()
-    {
-		if (EditorApplication.timeSinceStartup - lastTime < 1.0 || attachedType == null)
-            return;
+	public InspectorPlusTracker(string _name, string _group, Texture2D up, Texture2D down, string _filePath) {
+		name = _name;
+		group = _group;
+		m_arrowUp = up;
+		m_arrowDown = down;
+		m_filePath = _filePath;
+		UpdateFields();
+	}
 
-        //UpdateFilePath();
-        int count = -1;
-        Type t = attachedType;
-        FieldInfo[] fields = t.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-	   
-        List<string> varsCollected = new List<string>();
+	public void UpdateFields() {
+		if (EditorApplication.timeSinceStartup - m_lastTime < 1.0 || AttachedType == null)
+			return;
+
+		//UpdateFilePath();
+		int count = -1;
+		Type t = AttachedType;
+		FieldInfo[] fields = t.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+		List<string> varsCollected = new List<string>();
 		InspectorPlusSummary s = new InspectorPlusSummary();
-        s.ReadSummaries(filePath);
+		s.ReadSummaries(m_filePath);
 
-        foreach (FieldInfo fieldInfo in fields)
-        {
-            if (ignoredProperties.Contains(fieldInfo.Name))
-                continue;
+		foreach (FieldInfo fieldInfo in fields) {
+			if (IgnoredProperties.Contains(fieldInfo.Name))
+				continue;
 
-            if (fieldInfo.IsPrivate && !fieldInfo.IsDefined(typeof(SerializeField), false))
-                continue;
+			if (fieldInfo.IsPrivate && !fieldInfo.IsDefined(typeof(SerializeField), false))
+				continue;
 
-            if (fieldInfo.IsDefined(typeof(HideInInspector), false))
-                continue;
+			if (fieldInfo.IsDefined(typeof(HideInInspector), false))
+				continue;
 
-            ++count;
-            varsCollected.Add(fieldInfo.Name);
+			++count;
+			varsCollected.Add(fieldInfo.Name);
 
-            if (varsHad.Contains(fieldInfo.Name))
-                continue;
+			if (VarsProcessed.Contains(fieldInfo.Name))
+				continue;
 
-            if (!first)
-                varsHad.Insert(count, fieldInfo.Name);
-            else
-                varsHad.Add(fieldInfo.Name);
+			if (!m_first)
+				VarsProcessed.Insert(count, fieldInfo.Name);
+			else
+				VarsProcessed.Add(fieldInfo.Name);
 
-            InspectorPlusVar newVar = new InspectorPlusVar();
-            newVar.name = fieldInfo.Name;
-            newVar.SetDispName();
-            newVar.type = fieldInfo.FieldType.Name;
-            newVar.isArray = fieldInfo.FieldType.IsArray;
-            newVar.classType = attachedType.Name;
+			InspectorPlusVar newVar = new InspectorPlusVar();
+			newVar.name = fieldInfo.Name;
+			newVar.SetDispName();
+			newVar.type = fieldInfo.FieldType.Name;
+			newVar.isArray = fieldInfo.FieldType.IsArray;
+			newVar.classType = AttachedType.Name;
 
-            if (!first)
-                vars.Insert(count, newVar);
-            else
-                vars.Add(newVar);
-        }
+			if (!m_first)
+				m_vars.Insert(count, newVar);
+			else
+				m_vars.Add(newVar);
+		}
 
-        foreach (FieldInfo fieldInfo in fields)
-        {
-            string newTooltip = s.GetSummary(fieldInfo.Name);
-            InspectorPlusVar ipv = vars.Find(delegate(InspectorPlusVar i) { return i.name == fieldInfo.Name; });
+		foreach (FieldInfo fieldInfo in fields) {
+			string newTooltip = s.GetSummary(fieldInfo.Name);
+			InspectorPlusVar ipv = m_vars.Find(i => i.name == fieldInfo.Name);
 
-            if (ipv == null)
-                continue;
+			if (ipv == null) {
+				continue;
+			}
 
-            if (fieldInfo.IsDefined(typeof(TooltipAttribute), false))
-            {
-                object[] tips = fieldInfo.GetCustomAttributes(typeof(TooltipAttribute), false);
-                newTooltip = ((TooltipAttribute)tips[tips.Length - 1]).tooltip;
-            }
+			if (fieldInfo.IsDefined(typeof(TooltipAttribute), false)) {
+				object[] tips = fieldInfo.GetCustomAttributes(typeof(TooltipAttribute), false);
+				newTooltip = ((TooltipAttribute) tips[tips.Length - 1]).tooltip;
+			}
 
-            if (newTooltip != "")
-            {
-                ipv.hasTooltip = true;
-                ipv.tooltip = newTooltip;
-                ipv.fixedTip = true;
-            }
-            else ipv.fixedTip = false;
-        }
+			if (newTooltip != "") {
+				ipv.hasTooltip = true;
+				ipv.tooltip = newTooltip;
+				ipv.fixedTip = true;
+			}
+			else
+				ipv.fixedTip = false;
+		}
 
-        vars.RemoveAll(delegate(InspectorPlusVar v) { return (!varsCollected.Contains(v.name)); });
-        varsHad.RemoveAll(delegate(string n) { return (!varsCollected.Contains(n)); });
-		
-		lastTime = EditorApplication.timeSinceStartup;
-        first = false;
-    }
-    
+		m_vars.RemoveAll(delegate(InspectorPlusVar v) { return (!varsCollected.Contains(v.name)); });
+		VarsProcessed.RemoveAll(delegate(string n) { return (!varsCollected.Contains(n)); });
 
-    public List<InspectorPlusVar> GetVars()
-    {
-        return vars;
-    }
+		m_lastTime = EditorApplication.timeSinceStartup;
+		m_first = false;
+	}
 
-    public void UpdateTarget()
-    {
-        foreach (UnityEngine.Object o in Selection.objects)
-        {
-            GameObject g = o as GameObject;
 
-            if (g != null && g.GetComponent(name))
-            {
-                EditorUtility.SetDirty(g);
-            }
-        }
-    }
+	public List<InspectorPlusVar> GetVars() {
+		return m_vars;
+	}
 
-    void UpdateVarLevel()
-    {
-        for (int i = 0; i < vars.Count; i += 1)
-        {
-            vars[i].toggleLevel = 0;
-            vars[i].index = i;
-            vars[i].maxSize = vars.Count;
-        }
+	public void UpdateTarget() {
+		foreach (UnityEngine.Object o in Selection.objects) {
+			GameObject g = o as GameObject;
 
-        for (int i = 0; i < vars.Count; i += 1)
-        {
-            if (vars[i].toggleStart && vars[i].active)
-            {
-                for (int j = i + 1; j <= i + vars[i].toggleSize; j += 1)
-                {
-                    if (j < vars.Count)
-                        vars[j].toggleLevel += 1;
-                }
-            }
-        }
-    }
+			if (g != null && g.GetComponent(name)) {
+				EditorUtility.SetDirty(g);
+			}
+		}
+	}
 
-    public void DrawGUI()
-    {
-        float buttonWidth = 23.0f;
+	void UpdateVarLevel() {
+		for (int i = 0; i < m_vars.Count; i += 1) {
+			m_vars[i].toggleLevel = 0;
+			m_vars[i].index = i;
+			m_vars[i].maxSize = m_vars.Count;
+		}
 
-        UpdateFields();
-        UpdateVarLevel();
+		for (int i = 0; i < m_vars.Count; i += 1) {
+			if (m_vars[i].toggleStart && m_vars[i].active) {
+				for (int j = i + 1; j <= i + m_vars[i].toggleSize; j += 1) {
+					if (j < m_vars.Count)
+						m_vars[j].toggleLevel += 1;
+				}
+			}
+		}
+	}
 
-        for (int i = 0; i < vars.Count; ++i)
-        {
-            InspectorPlusVar ipv = vars[i];
-            EditorGUILayout.BeginHorizontal();
+	public void DrawGUI() {
+		float buttonWidth = 23.0f;
 
-            GUILayout.Space(5.0f);
+		UpdateFields();
+		UpdateVarLevel();
 
-            GUILayout.BeginHorizontal(GUILayout.Width(370.0f));
-            
-            GUILayout.Space(ipv.toggleLevel * 15.0f);
+		for (int i = 0; i < m_vars.Count; ++i) {
+			InspectorPlusVar ipv = m_vars[i];
+			EditorGUILayout.BeginHorizontal();
 
-            ipv.active = GUILayout.Toggle(ipv.active, "");
-            GUI.enabled = ipv.active;
-            ipv.dispName = GUILayout.TextField(ipv.dispName, GUILayout.Width(100.0f));
-            GUILayout.Space(5.0f);
-            GUI.enabled = !ipv.fixedTip;
+			GUILayout.Space(5.0f);
+
+			GUILayout.BeginHorizontal(GUILayout.Width(370.0f));
+
+			GUILayout.Space(ipv.toggleLevel * 15.0f);
+
+			ipv.active = GUILayout.Toggle(ipv.active, "");
+			GUI.enabled = ipv.active;
+			ipv.dispName = GUILayout.TextField(ipv.dispName, GUILayout.Width(100.0f));
+			GUILayout.Space(5.0f);
+			GUI.enabled = !ipv.fixedTip;
 			ipv.hasTooltip = GUILayout.Toggle(ipv.hasTooltip, "");
-            GUI.enabled = ipv.hasTooltip && GUI.enabled;
+			GUI.enabled = ipv.hasTooltip && GUI.enabled;
 			ipv.tooltip = GUILayout.TextField(ipv.tooltip, GUILayout.MinWidth(100.0f));
-            GUILayout.FlexibleSpace();
-            GUI.enabled = true;
+			GUILayout.FlexibleSpace();
+			GUI.enabled = true;
 
-            GUILayout.EndHorizontal();
+			GUILayout.EndHorizontal();
 
-            GUI.enabled = (i - 1) >= 0;
-            if (GUILayout.Button(arrowUp, "ButtonLeft", GUILayout.Width(buttonWidth), GUILayout.Height(20.0f)))
-            {
-                InspectorPlusVar temp = ipv;
-                vars[i] = vars[i - 1];
-                vars[i - 1] = temp;
-                UpdateTarget();
-            }
+			GUI.enabled = (i - 1) >= 0;
+			if (GUILayout.Button(m_arrowUp, "ButtonLeft", GUILayout.Width(buttonWidth), GUILayout.Height(20.0f))) {
+				InspectorPlusVar temp = ipv;
+				m_vars[i] = m_vars[i - 1];
+				m_vars[i - 1] = temp;
+				UpdateTarget();
+			}
 
-            GUI.enabled = (i + 1) < vars.Count;
-            if (GUILayout.Button(arrowDown, "ButtonRight", GUILayout.Width(buttonWidth), GUILayout.Height(20.0f)))
-            {
-                InspectorPlusVar temp = ipv;
-                vars[i] = vars[i + 1];
-                vars[i + 1] = temp;
-                UpdateTarget();
-            }
+			GUI.enabled = (i + 1) < m_vars.Count;
+			if (GUILayout.Button(m_arrowDown, "ButtonRight", GUILayout.Width(buttonWidth), GUILayout.Height(20.0f))) {
+				InspectorPlusVar temp = ipv;
+				m_vars[i] = m_vars[i + 1];
+				m_vars[i + 1] = temp;
+				UpdateTarget();
+			}
 
-            GUI.enabled = true;
+			GUI.enabled = true;
 			ipv.canWrite = GUILayout.Toggle(ipv.canWrite, new GUIContent(""));
-						
-            ipv.DrawFieldGUI();
-			
-            if (!ipv.active)
-                GUI.enabled = true;
 
-            
-            if (GUI.changed)
-            {
-                UpdateTarget();
-                dirty = true;
-            }
-        }
-    }
+			ipv.DrawFieldGUI();
+
+			if (!ipv.active)
+				GUI.enabled = true;
+
+
+			if (GUI.changed) {
+				UpdateTarget();
+				dirty = true;
+			}
+		}
+	}
 }
-
 #endif

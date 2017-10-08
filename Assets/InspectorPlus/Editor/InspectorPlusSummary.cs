@@ -1,95 +1,85 @@
 #if UNITY_EDITOR
-
-using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 
-public class InspectorPlusSummary
-{
-    Dictionary<string, string> summaries = new Dictionary<string, string>();
-    List<string> lines = new List<string>();
+public class InspectorPlusSummary {
+	Dictionary<string, string> summaries = new Dictionary<string, string>();
+	List<string> lines = new List<string>();
 
-    string FindVarName(int index)
-    {
-        int i = index + 1;
+	string FindVarName(int index) {
+		int i = index + 1;
 
-        if (lines[i].EndsWith(";"))
-        {
-            string[] words = lines[i].Split(' ');
+		if (lines[i].EndsWith(";")) {
+			string[] words = lines[i].Split(' ');
 
-            if (!lines[i].Contains("="))
-                return words[words.Length - 1].Replace(";", "");
-            else
-            {
-                for (int j = words.Length - 1; j >= 0; j -= 1)
-                {
-                    if (words[j].Contains("="))
-                        return words[j - 1];
-                }
-            }
-        }
-        return "";
-    }
+			if (!lines[i].Contains("="))
+				return words[words.Length - 1].Replace(";", "");
+			for (int j = words.Length - 1; j >= 0; j -= 1) {
+				if (words[j].Contains("=")) {
+					return words[j - 1];
+				}
+			}
+		}
 
-    public void ReadSummaries(string file)
-    {
-        if (file == "" || !File.Exists(file))
-            return; 
+		return "";
+	}
 
-        StreamReader reader = new StreamReader(file);
-        string contents = reader.ReadToEnd();
-        string[] linesRaw = contents.Split('\n');
+	public void ReadSummaries(string file) {
+		if (file == "" || !File.Exists(file)) {
+			return;
+		}
 
-        //format lines.
-        foreach (string l in linesRaw)
-        {
-            string addString = l;
-            addString = addString.Trim();
+		StreamReader reader = new StreamReader(file);
+		string contents = reader.ReadToEnd();
+		string[] linesRaw = contents.Split('\n');
 
-            if (addString.Length < 1)
-                continue;
+		//format lines.
+		foreach (string l in linesRaw) {
+			string addString = l;
+			addString = addString.Trim();
 
-            lines.Add(addString);
-        }
+			if (addString.Length < 1) {
+				continue;
+			}
 
-        //format summaries
-        bool summary = false;
-        string curSum = "";
-        int count = 0;
+			lines.Add(addString);
+		}
 
-        for (int i = 0; i < lines.Count; i += 1)
-        {
-            if (summary)
-                curSum += lines[i].Replace("///", "").Trim();
+		//format summaries
+		bool summary = false;
+		string curSum = "";
+		int count = 0;
 
-            if (lines[i].Contains("<summary>"))
-            {
-                summary = true;
-            }
+		for (int i = 0; i < lines.Count; i += 1) {
+			if (summary) {
+				curSum += lines[i].Replace("///", "").Trim();
+			}
 
-            if (lines[i].Contains("</summary>") && summary)
-            {
-                summary = false;
-                count += 1;
+			if (lines[i].Contains("<summary>")) {
+				summary = true;
+			}
 
-                string name = FindVarName(i);
-                if (name != "")
-                    summaries.Add(name, curSum.Replace("</summary>", ""));
+			if (lines[i].Contains("</summary>") && summary) {
+				summary = false;
+				count += 1;
 
-                curSum = "";
-            }
-        }
+				string name = FindVarName(i);
+				if (name != "")
+					summaries.Add(name, curSum.Replace("</summary>", ""));
 
-        reader.Close();
-    }
+				curSum = "";
+			}
+		}
 
-    public string GetSummary(string name)
-    {
-        if (summaries.ContainsKey(name))
-            return summaries[name];
+		reader.Close();
+	}
 
-        return "";
-    }
+	public string GetSummary(string name) {
+		if (summaries.ContainsKey(name))
+			return summaries[name];
+
+		return "";
+	}
 }
 
 #endif

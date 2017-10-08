@@ -2,18 +2,17 @@
 using UnityEngine;
 using System.Collections;
 
-public class InspectorPlusFilerStrings
-{
-
-
+public class InspectorPlusFilerStrings {
 	static string q = "\"";
 
-	static string Quot(string toQuout)
-	{
+	static string Quot(string toQuout) {
 		return q + toQuout + q;
 	}
+
 	public string header;
+
 	#region inspectorPlusVar
+
 	public string inspectorPlusVar = @"
     public class InspectorPlusVar
     {
@@ -102,8 +101,11 @@ public class InspectorPlusFilerStrings
 		textArea = _textArea;
     }
     }";
+
 	#endregion
+
 	#region vars
+
 	public string vars = @"	
     SerializedObject so;
 	SerializedProperty[] properties;
@@ -116,15 +118,21 @@ public class InspectorPlusFilerStrings
 	{
         vars = new List<InspectorPlusVar>();
         so = serializedObject;";
+
 	#endregion
+
 	#region onEnable
+
 	public string onEnable = @"	
 		int count = vars.Count;
 		properties = new SerializedProperty[count];
 	}
     ";
+
 	#endregion
+
 	#region progressBar
+
 	public string progressBar = @"
 	void ProgressBar (float value, string label)
 	{
@@ -133,8 +141,11 @@ public class InspectorPlusFilerStrings
 		EditorGUI.ProgressBar (rect, value, label);
 		GUILayout.Space (3.0f);
 	}";
+
 	#endregion
+
 	#region propertyField
+
 	public string propertyField = @"
 	void PropertyField (SerializedProperty sp, string name)
 	{
@@ -159,8 +170,11 @@ public class InspectorPlusFilerStrings
             GUILayout.EndVertical();
 		} else EditorGUILayout.PropertyField(sp, new GUIContent(dispName));
 	}";
+
 	#endregion
+
 	#region arrayGUI
+
 	public string arrayGUI = @"
 	void ArrayGUI (SerializedProperty sp, string name)
 	{
@@ -192,11 +206,13 @@ public class InspectorPlusFilerStrings
 
 				GUI.enabled = i > 0;
 
-				if (GUILayout.Button (" + Quot("U") + @", " + Quot("ButtonLeft") + @", GUILayout.Width (24.0f), GUILayout.Height(18.0f)))
+				if (GUILayout.Button (" + Quot("U") + @", " + Quot("ButtonLeft") +
+	                         @", GUILayout.Width (24.0f), GUILayout.Height(18.0f)))
 					array.MoveArrayElement (i - 1, i);
 
 				GUI.enabled = i < array.arraySize - 1;
-                if (GUILayout.Button(" + Quot("D") + @", " + Quot("ButtonRight") + @", GUILayout.Width(24.0f), GUILayout.Height(18.0f)))
+                if (GUILayout.Button(" + Quot("D") + @", " + Quot("ButtonRight") +
+	                         @", GUILayout.Width(24.0f), GUILayout.Height(18.0f)))
 					array.MoveArrayElement (i + 1, i);
 
 				++i;
@@ -209,7 +225,8 @@ public class InspectorPlusFilerStrings
 
 				EditorGUILayout.BeginHorizontal ();
 
-                if (!size.hasMultipleDifferentValues && GUILayout.Button(" + Quot("") + @", " + Quot("OL Plus") + @", GUILayout.Width(24.0f)))
+                if (!size.hasMultipleDifferentValues && GUILayout.Button(" + Quot("") + @", " + Quot("OL Plus") +
+	                         @", GUILayout.Width(24.0f)))
 					array.arraySize += 1;
 
 
@@ -236,7 +253,8 @@ public class InspectorPlusFilerStrings
 				array.arraySize += 1;
 
 			GUI.enabled = false;
-			EditorGUILayout.PropertyField (array.GetArrayElementAtIndex (array.arraySize - 1), new GUIContent (" + Quot("") + @" + array.arraySize));
+			EditorGUILayout.PropertyField (array.GetArrayElementAtIndex (array.arraySize - 1), new GUIContent (" + Quot("") +
+	                         @" + array.arraySize));
 			GUI.enabled = true;
 
 			EditorGUILayout.EndHorizontal ();
@@ -247,8 +265,11 @@ public class InspectorPlusFilerStrings
 		EditorGUILayout.EndVertical ();
 		EditorGUIUtility.LookLikeControls (170.0f, 80.0f);
 	}";
+
 	#endregion
+
 	#region vector2Field
+
 	public string vector2Field = @"
 	void Vector2Field(SerializedProperty sp)
 	{
@@ -261,8 +282,11 @@ public class InspectorPlusFilerStrings
 		
 		EditorGUI.EndProperty ();
 	}";
+
 	#endregion
+
 	#region floatField
+
 	public string floatField = @"
 	void FloatField(SerializedProperty sp, InspectorPlusVar v)
 	{
@@ -284,8 +308,11 @@ public class InspectorPlusFilerStrings
 		}
         else EditorGUILayout.PropertyField(sp, new GUIContent(dispName));
 	}";
+
 	#endregion
+
 	#region intField
+
 	public string intField = @"
 	void IntField(SerializedProperty sp, InspectorPlusVar v)
 	{
@@ -317,8 +344,11 @@ public class InspectorPlusFilerStrings
 		}
         else EditorGUILayout.PropertyField(sp, new GUIContent(dispName));
 	}";
+
 	#endregion
+
 	#region quaternionField
+
 	public string quaternionField = @"
 	void QuaternionField(SerializedProperty sp)
 	{
@@ -344,6 +374,7 @@ public class InspectorPlusFilerStrings
 
 		EditorGUI.EndProperty ();
 	}";
+
 	#endregion
 
 	public string boolField = @"
@@ -420,7 +451,8 @@ public class InspectorPlusFilerStrings
 		else
 			newValue = EditorGUILayout.TextArea(sp.stringValue, GUILayout.Width(Screen.width));
 
-		if (GUI.GetNameOfFocusedControl() != focusName && !sp.hasMultipleDifferentValues && sp.stringValue == " + Quot("") + @")
+		if (GUI.GetNameOfFocusedControl() != focusName && !sp.hasMultipleDifferentValues && sp.stringValue == " + Quot("") +
+	                        @")
 		{
 			GUI.color = new Color(0.7f, 0.7f, 0.7f);
 			GUI.Label(GUILayoutUtility.GetLastRect(), v.textFieldDefault);
@@ -436,9 +468,17 @@ public class InspectorPlusFilerStrings
 		EditorGUI.EndProperty();
 	}";
 
-	public string GetOnGUI(bool hasFloat, bool hasInt, bool hasProgressBar, bool hasArray, bool hasVector2, bool hasQuaternion, bool hasBool,
-						   bool hasTooltip, bool hasSpace, bool hasTexture, bool hasText)
-	{
+	public string GetOnGUI(bool hasFloat,
+		bool hasInt,
+		bool hasProgressBar,
+		bool hasArray,
+		bool hasVector2,
+		bool hasQuaternion,
+		bool hasBool,
+		bool hasTooltip,
+		bool hasSpace,
+		bool hasTexture,
+		bool hasText) {
 		string ret = "";
 		ret += @"
 	public override void OnInspectorGUI ()
@@ -456,10 +496,10 @@ public class InspectorPlusFilerStrings
 			{
 				SerializedProperty sp = properties [i];";
 
-		bool any = hasFloat || hasInt || hasProgressBar || hasArray || hasVector2 || hasQuaternion || hasBool || hasSpace || hasTexture || hasText;
+		bool any = hasFloat || hasInt || hasProgressBar || hasArray || hasVector2 || hasQuaternion || hasBool || hasSpace ||
+		           hasTexture || hasText;
 
-		if (any)
-		{
+		if (any) {
 			ret += @"string s = v.type;
 							 bool skip = false;";
 		}
@@ -689,7 +729,8 @@ public class InspectorPlusFilerStrings
         GUILayout.Label(" + Quot("Created with") + @");
         GUI.color = new Color(1.0f, 1.0f, 1.0f, 0.6f);
         if (GUILayout.Button(" + Quot("Inspector++") + @"))
-            Application.OpenURL(" + Quot("http://forum.unity3d.com/threads/136727-Inspector-Meh-to-WOW-inspectors") + @");
+            Application.OpenURL(" + Quot("http://forum.unity3d.com/threads/136727-Inspector-Meh-to-WOW-inspectors") +
+	                          @");
         GUI.color = new Color(1.0f, 1.0f, 1.0f);
 		GUILayout.EndHorizontal();
         //END REMOVE HERE
@@ -765,8 +806,7 @@ public class InspectorPlusFilerStrings
 	}";
 
 
-	public string GetSceneString(bool hasScene, bool hasVectorScene, bool hasQuaternionScene)
-	{
+	public string GetSceneString(bool hasScene, bool hasVectorScene, bool hasQuaternionScene) {
 		string ret = "";
 		ret += @"
 	object GetTargetField(string name){return target.GetType ().GetField (name).GetValue (target);}
@@ -800,8 +840,7 @@ public class InspectorPlusFilerStrings
 
 
 
-	public InspectorPlusFilerStrings(string name, string fileName, bool hasInspector)
-	{
+	public InspectorPlusFilerStrings(string name, string fileName, bool hasInspector) {
 		header = @"
 using UnityEngine;
 using System.Collections.Generic;

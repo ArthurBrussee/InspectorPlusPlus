@@ -2,12 +2,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEditor;
-using System.Reflection;
 using System;
 using System.IO;
 
 public class InspectorPlusWindow : EditorWindow {
-	public bool editing = false;
+	public bool editing;
 	public InspectorPlusManager manager;
 	List<string> names;
 	InspectorPlusTracker editComp;
@@ -15,31 +14,24 @@ public class InspectorPlusWindow : EditorWindow {
 	Vector2 openScrollPosition;
 	string searchFilter = "";
 
-	public string assetPath {
+	string AssetPath {
 		get { return Path.GetDirectoryName(AssetDatabase.GetAssetPath(MonoScript.FromScriptableObject(this))); }
 	}
 
-	public string filePath {
-		get {
-			int index = Application.dataPath.LastIndexOf("Assets");
-			return Application.dataPath.Substring(0, index) +
-			       Path.GetDirectoryName(AssetDatabase.GetAssetPath(MonoScript.FromScriptableObject(this)));
-		}
-	}
-
 	void OnEnable() {
-		manager = (InspectorPlusManager) AssetDatabase.LoadAssetAtPath(assetPath + "/InspectorPlus.asset",
+		manager = (InspectorPlusManager) AssetDatabase.LoadAssetAtPath(AssetPath + "/InspectorPlus.asset",
 			typeof(InspectorPlusManager));
 
-		if (manager != null)
+		if (manager != null) {
 			return;
+		}
+
 		manager = (InspectorPlusManager) CreateInstance(typeof(InspectorPlusManager));
-		AssetDatabase.CreateAsset(manager, assetPath + "/InspectorPlus.asset");
+		AssetDatabase.CreateAsset(manager, AssetPath + "/InspectorPlus.asset");
 	}
 
 	void OnDisable() {
 		manager.Save();
-
 	}
 
 	[MenuItem("Window/Inspector++")]
@@ -60,22 +52,27 @@ public class InspectorPlusWindow : EditorWindow {
 	}
 
 	public void OnGUI() {
-		if (!editing)
+		if (!editing) {
 			DrawOpen();
-		else
+		}
+		else {
 			DrawEditor();
+		}
 	}
 
 	bool CanHaveEditor(MonoScript m) {
-		if (m.GetClass() == null)
+		if (m.GetClass() == null) {
 			return false;
+		}
 
-		if (m.GetClass().IsSubclassOf(typeof(MonoBehaviour)))
+		if (m.GetClass().IsSubclassOf(typeof(MonoBehaviour))) {
 			return true;
+		}
 
 		if (m.GetClass().IsSubclassOf(typeof(ScriptableObject))) {
-			if (!m.GetClass().IsSubclassOf(typeof(Editor)) && !m.GetClass().IsSubclassOf(typeof(EditorWindow)))
+			if (!m.GetClass().IsSubclassOf(typeof(Editor)) && !m.GetClass().IsSubclassOf(typeof(EditorWindow))) {
 				return true;
+			}
 		}
 
 		return false;
@@ -114,7 +111,6 @@ Your inspector has been saved to " + n + @"InspectorPlus.cs. Feel free to distri
 
 	void DrawOpen() {
 		//gets only existing editors.
-
 		GUILayout.BeginHorizontal(GUILayout.Width(Screen.width));
 		GUILayout.FlexibleSpace(); //left sidebar
 
@@ -155,8 +151,6 @@ Your inspector has been saved to " + n + @"InspectorPlus.cs. Feel free to distri
 
 		GUILayout.BeginVertical("Button", GUILayout.Width(180.0f));
 
-
-
 		UnityEngine.Object[] objs = Selection.GetFiltered(typeof(MonoScript), SelectionMode.Assets);
 		var selected = new List<MonoScript>();
 
@@ -179,9 +173,10 @@ Your inspector has been saved to " + n + @"InspectorPlus.cs. Feel free to distri
 		}
 
 		if (GUILayout.Button("Create")) {
-			foreach (MonoScript m in selected)
+			foreach (MonoScript m in selected) {
 				CreateNew(m.GetClass().Name, Application.dataPath + AssetDatabase.GetAssetPath(m).Replace("Assets", ""),
 					m.GetClass());
+			}
 
 			AssetDatabase.Refresh();
 		}
@@ -191,7 +186,6 @@ Your inspector has been saved to " + n + @"InspectorPlus.cs. Feel free to distri
 		GUILayout.EndVertical();
 		GUILayout.FlexibleSpace();
 		GUILayout.EndHorizontal();
-
 
 		GUILayout.EndVertical();
 
@@ -213,8 +207,9 @@ Your inspector has been saved to " + n + @"InspectorPlus.cs. Feel free to distri
 		GUILayout.BeginHorizontal();
 		GUILayout.FlexibleSpace();
 
-		if (GUILayout.Button("Back"))
+		if (GUILayout.Button("Back")) {
 			editing = false;
+		}
 
 		GUILayout.FlexibleSpace();
 		GUILayout.EndHorizontal();
