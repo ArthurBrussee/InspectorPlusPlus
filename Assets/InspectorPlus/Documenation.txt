@@ -1,0 +1,62 @@
+﻿Inspector++
+ 
+Thank you for purchasing Inspector++. Well, I hope you did. If you didn’t: arrr matey, no hard feelings!
+ 
+First off: no one likes reading (or is that just me) so to get an impression of how this works, watch the video here! http://youtu.be/2lxgnJu2wJo
+(Note: Old video of V1.0, current version V1.4)
+ 
+More detailed info:
+ 
+Set-up
+ 
+As soon as you imported this asset you can start creating inspectors! Open the Inspector++ window via the Window->Inspector++ menu.
+
+Adding Inspectors
+ 
+Select your scripts from your project window. All MonoBehaviours or ScriptableObjects you selected appear in the window. Click create and you’re done, all your scripts now have awesome Inspectors.
+ 
+ 
+Editing Inspectors
+Inspector++ includes a window to visually edit your inspectors. Open it by clicking ‘edit’ next to the file you want to edit.
+ 
+The window displays all variables, with some options. Here are the basic options in order:
+
+-The first toggle lets you hide or unhide the variable from the inspector.
+-The display name of the variable (which you can edit)
+-A toggle to enable a tooltip
+-A field for the tooltip
+-U to move the variable up
+-D to move the variable down
+-The last toggle enables writing. Disable it to make a read-only property.
+ 
+From there it depends on the type of variable what kind of controls you see. These should be self explanatory.
+ 
+Under the variable you might see a small line. It’s actually a small box you can resize to put some space between vars. When the box is large enough you will notice some additional controls. From left to right:
+
+-Toggle to enable or disable a label
+-The text of the label.
+-Toggle for a Bold label
+-Toggle for a italic label
+-Slider to align the label
+-Toggle to enable or disable a button
+-The text that should appear on the button.
+-The function that should be called when the button is pressed
+-If you have multiple buttons, you can ‘condense’ them. This means they will stick together and take up less space.
+ 
+You can add a maximum of 16 buttons (4 per line) and 4 labels
+ 
+Tooltips
+You can make tooltips via a toggle and textfield in the editor, but also through scripting, in 2 different ways:
+
+1. a summary (C# only)
+///<summary>
+///this will be my tooltip!
+///</summary>
+public float tooltip;
+2.Attribute:
+[InspectorTip(“This will be my tooltip!”)]		(or for JS @InspectorTip
+public int myInt;
+ 
+Save to file
+ 
+You might have noticed you can not only edit an inspector but also 'Save to file'. This features produces a .cs file you can share in your projects or use in an asset store project. The .cs file is a optimized version of your custom inspector. Note that when you edit your inspector, this file doesn't get updated. You need to regenerate it after any changes.
