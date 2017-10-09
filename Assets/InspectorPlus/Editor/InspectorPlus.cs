@@ -370,113 +370,124 @@ public class InspectorPlus : Editor {
 		serializedObject.Update();
 		RefreshVars();
 
-		for (int i = 0; i < m_properties.Length; i += 1) {
+		for (int i = 0; i < m_properties.Length; ++i) {
 			InspectorPlusVar v = m_vars[i];
+			SerializedProperty prop = m_properties[i];
+			DrawProperty(v, prop, ref i);
+		}
 
-			if (v.active && m_properties[i] != null) {
-				SerializedProperty sp = m_properties[i];
-				string s = v.type;
-				m_curName = v.name;
-				m_dispName = v.dispName;
+		if (!string.IsNullOrEmpty(GUI.tooltip)) {
+			GUI.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+			GUI.Box(m_tooltipRect, new GUIContent());
+			EditorGUI.HelpBox(m_tooltipRect, GUI.tooltip, MessageType.Info);
+			Repaint();
+		}
 
-				GUI.enabled = v.canWrite;
+		GUI.tooltip = "";
 
-				GUILayout.BeginHorizontal();
+		serializedObject.ApplyModifiedProperties();
+	}
 
-				if (v.toggleLevel != 0) {
-					GUILayout.Space(v.toggleLevel * 10.0f);
-				}
+	int DrawProperty(InspectorPlusVar v, SerializedProperty prop, ref int i) {
+		if (v.active && prop != null) {
+			SerializedProperty sp = prop;
+			string s = v.type;
+			m_curName = v.name;
+			m_dispName = v.dispName;
 
-				//TODO: This doesn't seem efficient?
-				if (s == typeof(Vector2).Name) {
-					Vector2Field(sp);
-				}
-				else if (s == typeof(float).Name) {
-					FloatField(sp, v);
-				}
-				else if (s == typeof(int).Name) {
-					IntField(sp, v);
-				}
-				else if (s == typeof(Quaternion).Name) {
-					QuaternionField(sp);
-				}
-				else if (s == typeof(bool).Name) {
-					i += BoolField(sp, v);
-				}
-				else if (s == typeof(Texture2D).Name || s == typeof(Texture).Name) {
-					TextureGUI(sp, v);
-				}
-				else if (s == typeof(string).Name) {
-					TextGUI(sp, v);
-				}
-				else if (sp.isArray) {
-					ArrayGUI(sp, m_curName);
-				}
-				else {
-					PropertyField(sp, m_curName);
-				}
+			GUI.enabled = v.canWrite;
 
-				GUILayout.EndHorizontal();
-				GUI.enabled = true;
+			GUILayout.BeginHorizontal();
 
-				if (v.hasTooltip) {
-					Rect last = GUILayoutUtility.GetLastRect();
-					GUI.Label(last, new GUIContent("", v.tooltip));
+			if (v.toggleLevel != 0) {
+				GUILayout.Space(v.toggleLevel * 10.0f);
+			}
 
-					Vector2 size = new GUIStyle().CalcSize(new GUIContent(GUI.tooltip));
-					m_tooltipRect = new Rect(Event.current.mousePosition.x + 4.0f, Event.current.mousePosition.y + 12.0f, 28.0f + size.x,
-						9.0f + size.y);
+			//TODO: This doesn't seem efficient?
+			if (s == typeof(Vector2).Name) {
+				Vector2Field(sp);
+			}
+			else if (s == typeof(float).Name) {
+				FloatField(sp, v);
+			}
+			else if (s == typeof(int).Name) {
+				IntField(sp, v);
+			}
+			else if (s == typeof(Quaternion).Name) {
+				QuaternionField(sp);
+			}
+			else if (s == typeof(bool).Name) {
+				i += BoolField(sp, v);
+			}
+			else if (s == typeof(Texture2D).Name || s == typeof(Texture).Name) {
+				TextureGUI(sp, v);
+			}
+			else if (s == typeof(string).Name) {
+				TextGUI(sp, v);
+			}
+			else if (sp.isArray) {
+				ArrayGUI(sp, m_curName);
+			}
+			else {
+				PropertyField(sp, m_curName);
+			}
 
-					if (m_tooltipRect.width > 250.0f) {
-						float delt = (m_tooltipRect.width - 250.0f);
-						m_tooltipRect.width -= delt;
-						m_tooltipRect.height += size.y * Mathf.CeilToInt(delt / 250.0f);
-					}
+			GUILayout.EndHorizontal();
+			GUI.enabled = true;
+
+			if (v.hasTooltip) {
+				Rect last = GUILayoutUtility.GetLastRect();
+				GUI.Label(last, new GUIContent("", v.tooltip));
+
+				Vector2 size = new GUIStyle().CalcSize(new GUIContent(GUI.tooltip));
+				m_tooltipRect = new Rect(Event.current.mousePosition.x + 4.0f, Event.current.mousePosition.y + 12.0f, 28.0f + size.x,
+					9.0f + size.y);
+
+				if (m_tooltipRect.width > 250.0f) {
+					float delt = (m_tooltipRect.width - 250.0f);
+					m_tooltipRect.width -= delt;
+					m_tooltipRect.height += size.y * Mathf.CeilToInt(delt / 250.0f);
+				}
+			}
+		}
+
+		if (v.space == 0.0f) {
+			return i;
+		}
+
+		float usedSpace = 0.0f;
+		for (int j = 0; j < v.numSpace; j += 1) {
+			bool buttonLine = false;
+			for (int k = 0; k < 4; k += 1) {
+				if (v.buttonEnabled[j * 4 + k]) {
+					buttonLine = true;
 				}
 			}
 
-			if (v.space == 0.0f) {
-				continue;
+			if (v.labelEnabled[j] || buttonLine) {
+				usedSpace += 18.0f;
+			}
+		}
+
+		if (v.space == 0.0f) {
+			return i;
+		}
+
+		float space = Mathf.Max(0.0f, (v.space - usedSpace) / 2.0f);
+
+		for (int j = 0; j < v.numSpace; ++j) {
+			bool buttonLine = false;
+			for (int k = 0; k < 4; k += 1) {
+				if (v.buttonEnabled[j * 4 + k]) {
+					buttonLine = true;
+				}
 			}
 
-			float usedSpace = 0.0f;
-			for (int j = 0; j < v.numSpace; j += 1) {
-				bool buttonLine = false;
-				for (int k = 0; k < 4; k += 1) {
-					if (v.buttonEnabled[j * 4 + k]) {
-						buttonLine = true;
-					}
-				}
-
-				if (v.labelEnabled[j] || buttonLine) {
-					usedSpace += 18.0f;
-				}
-			}
-
-			if (v.space == 0.0f) {
-				continue;
-			}
-
-			float space = Mathf.Max(0.0f, (v.space - usedSpace) / 2.0f);
-
-			GUILayout.Space(space);
-
-			for (int j = 0; j < v.numSpace; j += 1) {
-				bool buttonLine = false;
-				for (int k = 0; k < 4; k += 1) {
-					if (v.buttonEnabled[j * 4 + k]) {
-						buttonLine = true;
-					}
-				}
-
-				if (!v.labelEnabled[j] && !buttonLine) {
-					continue;
-				}
-
+			if (v.labelEnabled[j] || buttonLine) {
 				GUILayout.BeginHorizontal();
 
 				if (v.labelEnabled[j]) {
-					GUILayout.Label(v.label[j]);
+					GUILayout.Label(v.label[j], v.labelBold[j] ? EditorStyles.boldLabel : EditorStyles.label);
 				}
 
 				bool alignRight = v.labelEnabled[j] && buttonLine;
@@ -524,7 +535,8 @@ public class InspectorPlus : Editor {
 
 						if (GUILayout.Button(v.buttonText[j * 4 + k], style, GUILayout.MinWidth(60.0f))) {
 							foreach (object t in targets) {
-								MethodInfo m = t.GetType().GetMethod(v.buttonCallback[j * 4 + k], BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic);
+								MethodInfo m = t.GetType().GetMethod(v.buttonCallback[j * 4 + k],
+									BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic);
 
 								if (m != null) {
 									m.Invoke(target, null);
@@ -547,20 +559,11 @@ public class InspectorPlus : Editor {
 				GUILayout.EndHorizontal();
 			}
 
-			GUILayout.Space(space);
+			if (j < v.numSpace - 1) {
+				GUILayout.Space(space / v.numSpace);
+			}
 		}
-
-
-		if (!string.IsNullOrEmpty(GUI.tooltip)) {
-			GUI.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-			GUI.Box(m_tooltipRect, new GUIContent());
-			EditorGUI.HelpBox(m_tooltipRect, GUI.tooltip, MessageType.Info);
-			Repaint();
-		}
-
-		GUI.tooltip = "";
-
-		serializedObject.ApplyModifiedProperties();
+		return i;
 	}
 
 	object GetTargetField(string fieldName) {

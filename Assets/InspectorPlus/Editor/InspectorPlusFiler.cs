@@ -59,7 +59,7 @@ public class InspectorPlusFiler {
 		return @"
         vars.Add(new InspectorPlusVar(" + BuildArgs(v.limitType, v.min, v.max, v.progressBar, v.iMin, v.iMax, v.active,
 			       v.type, v.name, v.dispName, v.vectorDrawType, v.relative, v.scale,
-			       v.space, v.labelEnabled, v.label, v.buttonEnabled, v.buttonText,
+			       v.space, v.labelEnabled, v.label, v.labelBold, v.buttonEnabled, v.buttonText,
 			       v.buttonCallback, v.buttonCondense, v.numSpace, v.classType,
 			       v.offset, v.QuaternionHandle, v.canWrite, v.tooltip, v.hasTooltip, v.toggleStart, v.toggleSize, v.toggleLevel,
 			       v.largeTexture, v.textureSize, v.textFieldDefault, v.textArea) + "));";

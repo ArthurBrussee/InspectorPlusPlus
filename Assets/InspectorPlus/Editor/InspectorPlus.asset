@@ -37,10 +37,6 @@ MonoBehaviour:
     - intList
     - test
     IgnoredProperties: []
-    group: 
   editName: InspectorPlusTestScript
-  groups:
-  - 
-  groupOpen: 0000
   arrowUp: {fileID: 2800000, guid: 54c6fd2073f9a2849b01a02dfd33cbf3, type: 3}
   arrowDown: {fileID: 2800000, guid: dc97ca9c78ffc114dab68ffa9e5223bd, type: 3}

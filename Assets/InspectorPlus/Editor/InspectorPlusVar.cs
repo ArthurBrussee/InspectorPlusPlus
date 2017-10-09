@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 using System;
+using UnityEngine.Collections;
 
 [Serializable]
 public class InspectorPlusVar {
@@ -26,6 +27,7 @@ public class InspectorPlusVar {
 	public float max = -0.0f;
 
 	public bool progressBar;
+
 
 	public int iMin = -0;
 	public int iMax = -0;
@@ -56,6 +58,7 @@ public class InspectorPlusVar {
 
 	public bool[] labelEnabled = new bool[4];
 	public string[] label = new string[4];
+	public bool[] labelBold = new bool[4];
 
 	public bool[] buttonEnabled = new bool[16];
 	public string[] buttonText = new string[16];
@@ -93,17 +96,14 @@ public class InspectorPlusVar {
 	public bool textArea;
 
 	public InspectorPlusVar() {
-		for (int i = 0; i < 4; i += 1) {
-			labelEnabled[i] = false;
+		for (int i = 0; i < 4; ++i) {
 			label[i] = "";
 			for (int j = 0; j < 4; j += 1) {
-				buttonEnabled[i * 4 + j] = false;
 				buttonText[i * 4 + j] = "";
 				buttonCallback[i * 4 + j] = "";
 			}
 		}
 	}
-
 
 	public void SetDispName() {
 		string output = "";
@@ -237,12 +237,9 @@ public class InspectorPlusVar {
 
 		gui.Line(0);
 
-		numSpace = Mathf.FloorToInt(space / 25.0f);
 		bool guiEnabled = GUI.enabled;
 
-		if (numSpace > 0) {
-			gui.Line((space - numSpace * 25.0f) / 2.0f);
-		}
+		numSpace = Mathf.Min(4, Mathf.FloorToInt(space / EditorGUIUtility.singleLineHeight));
 
 		for (int i = 0; i < numSpace; i += 1) {
 			GUI.enabled = true;
@@ -252,20 +249,26 @@ public class InspectorPlusVar {
 
 			GUI.enabled = labelEnabled[i];
 			GUI.Label(gui.GetRect(80.0f), "Label ");
-			label[i] = EditorGUI.TextField(gui.GetRect(40.0f), "", label[i]);
+			label[i] = EditorGUI.TextField(gui.GetRect(140.0f), "", label[i]);
+			labelBold[i] = EditorGUI.Toggle(gui.GetRect(40.0f), labelBold[i]);
+
 			GUI.enabled = true;
 
 			for (int j = 0; j < 4; j += 1) {
 				GUI.enabled = true;
+
+				gui.GetRect(80.0f);
+
 				//button
 				buttonEnabled[i * 4 + j] = GUI.Toggle(gui.GetRect(40.0f), buttonEnabled[i * 4 + j], "");
 
-				GUI.enabled = buttonEnabled[i * 4 + j];
-				GUI.Label(gui.GetRect(90.0f), "Button ");
-				buttonText[i * 4 + j] = EditorGUI.TextField(gui.GetRect(50.0f), "", buttonText[i * 4 + j]);
 
-				GUI.Label(gui.GetRect(90.0f), "Callback ");
-				buttonCallback[i * 4 + j] = EditorGUI.TextField(gui.GetRect(50.0f), "", buttonCallback[i * 4 + j]);
+				GUI.enabled = buttonEnabled[i * 4 + j];
+				GUI.Label(gui.GetRect(80.0f), "Button ");
+				buttonText[i * 4 + j] = EditorGUI.TextField(gui.GetRect(80.0f), "", buttonText[i * 4 + j]);
+
+				GUI.Label(gui.GetRect(80.0f), "Callback ");
+				buttonCallback[i * 4 + j] = EditorGUI.TextField(gui.GetRect(80.0f), "", buttonCallback[i * 4 + j]);
 
 				bool buttonToCome = false;
 				for (int k = j; k < 4; k += 1)
@@ -281,14 +284,9 @@ public class InspectorPlusVar {
 				}
 			}
 
-			gui.Line(EditorGUIUtility.singleLineHeight);
+			gui.Line(space / numSpace);
 		}
 
-		if (numSpace > 0) {
-			gui.Line(-(space - numSpace * 25.0f) / 2.0f);
-		} else {
-			gui.Line(space);
-		}
 
 		GUI.enabled = guiEnabled;
 
@@ -302,6 +300,8 @@ public class InspectorPlusVar {
 			if (boxRect.Contains(Event.current.mousePosition)) {
 				startpos = Event.current.mousePosition;
 				pressed = true;
+
+				Event.current.Use();
 			}
 		}
 
@@ -313,8 +313,6 @@ public class InspectorPlusVar {
 			space = Mathf.Clamp(space, 0.0f, 4 * 25.0f);
 
 			GUI.changed = true;
-
-			Event.current.Use();
 		}
 
 		if (Event.current.type == EventType.mouseUp) {

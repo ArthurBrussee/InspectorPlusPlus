@@ -28,7 +28,6 @@ namespace TestSpace
 
 	public class InspectorPlusTestScript : MonoBehaviour
 	{
-
 		public Transform target;
 		public Vector3 lookAtPoint;
 		public Vector3 direction;
@@ -45,10 +44,6 @@ namespace TestSpace
 
 		public Transform[] myTransforms = new Transform[5];
 
-		/*
-		[InspectorTip("Made by an InspectorTip")]
-		public float hideMe;
-		 * */
 
 		/// <summary>
 		/// This tooltip is a summary
@@ -76,14 +71,6 @@ namespace TestSpace
 
 		public Rect test;
 
-		private int _myPropDataContainer;
-
-		private int MyProperty
-		{
-			get { return _myPropDataContainer; }
-
-			set { _myPropDataContainer = value; }
-		}
 
 		// Use this for initialization
 		private void Start()
@@ -98,12 +85,11 @@ namespace TestSpace
 		}
 
 
+
 		private void OnButton()
 		{
-			//InspectorPlusSummary s = new InspectorPlusSummary();
-
-			//foreach (string d in s.ReadSummaries(Application.dataPath + "/NGUI/Scripts/interaction/UIButtonTween.cs"))
-			//Debug.Log(d);
+			Debug.Log("Button!");
 		}
+
 	}
 }
