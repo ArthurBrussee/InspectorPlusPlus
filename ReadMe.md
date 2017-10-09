@@ -2,7 +2,7 @@
 
 Inspector++ Is a tool to visually create Unity inspectors
 
-![InspectorPlusPlus](/MainGithub.png "Title")
+![Main](MainGithub.png?raw=true "Title")
 
 **Set-up**
  
