@@ -19,6 +19,7 @@ public class InspectorPlusTracker {
 		}
 	}
 
+	[SerializeField]
 	List<InspectorPlusVar> m_vars = new List<InspectorPlusVar>();
 
 	[SerializeField] protected List<string> VarsProcessed = new List<string>();
@@ -124,8 +125,8 @@ public class InspectorPlusTracker {
 			}
 		}
 
-		m_vars.RemoveAll(v => (!varsCollected.Contains(v.name)));
-		VarsProcessed.RemoveAll(n => (!varsCollected.Contains(n)));
+		m_vars.RemoveAll(v => !varsCollected.Contains(v.name));
+		VarsProcessed.RemoveAll(n => !varsCollected.Contains(n));
 
 		m_lastTime = EditorApplication.timeSinceStartup;
 		m_first = false;

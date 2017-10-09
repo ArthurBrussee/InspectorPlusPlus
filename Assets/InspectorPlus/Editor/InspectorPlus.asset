@@ -13,6 +13,1635 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trackers:
   - name: InspectorPlusTestScript
+    m_vars:
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Transform
+      name: target
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 0
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Vector3
+      name: lookAtPoint
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 1
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Vector3
+      name: direction
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 2
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Vector2
+      name: screenPos
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 3
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Single
+      name: maxSpeed
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 4
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Single
+      name: health
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 5
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Int32
+      name: MyInt
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 6
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Int32
+      name: level
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 7
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Int32
+      name: myAwesomeInt
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 8
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Transform[]
+      name: myTransforms
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 1
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 9
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Single
+      name: dontHideMe
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: This tooltip is a summary
+      hasTooltip: 1
+      fixedTip: 1
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 10
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: String
+      name: stringTest
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 11
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Quaternion
+      name: rotation
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Rotation (with handle in scene)
+      hasTooltip: 1
+      fixedTip: 1
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 12
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Boolean
+      name: toggleField
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 1
+      toggleLevel: 0
+      index: 13
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Boolean
+      name: toggle1
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 1
+      toggleLevel: 0
+      index: 14
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Single
+      name: toggleStr
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 15
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Single
+      name: my_ugly_var
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 16
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Texture
+      name: myTextureWithLargePreview
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 17
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Texture
+      name: textureTest
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 18
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: MyTestClass
+      name: myTestClass
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 19
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: List`1
+      name: intList
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 20
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
+    - limitType: 0
+      min: -0
+      max: -0
+      progressBar: 0
+      iMin: 0
+      iMax: 0
+      active: 1
+      type: Rect
+      name: test
+      vectorDrawType: 0
+      relative: 0
+      scale: 0
+      space: 0
+      labelEnabled: 00000000
+      label:
+      - 
+      - 
+      - 
+      - 
+      labelBold: 00000000
+      buttonEnabled: 00000000000000000000000000000000
+      buttonText:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCallback:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      buttonCondense: 00000000
+      numSpace: 0
+      classType: InspectorPlusTestScript
+      isArray: 0
+      offset: {x: 0.5, y: 0.5, z: 0}
+      QuaternionHandle: 0
+      canWrite: 1
+      tooltip: Tooltip
+      hasTooltip: 0
+      fixedTip: 0
+      toggleStart: 0
+      toggleSize: 0
+      toggleLevel: 0
+      index: 21
+      maxSize: 22
+      largeTexture: 0
+      textureSize: 70
+      textFieldDefault: 
+      textArea: 0
     VarsProcessed:
     - target
     - lookAtPoint
