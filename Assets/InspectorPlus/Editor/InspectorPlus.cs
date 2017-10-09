@@ -595,7 +595,12 @@ public class InspectorPlus : Editor {
 				curVal = relative ? val : val - t.position;
 				float size = scale ? Mathf.Min(2.0f, Mathf.Sqrt(curVal.magnitude) / 2.0f) : 1.0f;
 				size *= HandleUtility.GetHandleSize(t.position);
-				Handles.ArrowHandleCap(0, t.position, curVal != Vector3.zero ? Quaternion.LookRotation(val.normalized) : Quaternion.identity, size, Event.current.type);
+
+				if (val.magnitude > 0) {
+					Handles.ArrowHandleCap(0, t.position,
+						curVal != Vector3.zero ? Quaternion.LookRotation(val.normalized) : Quaternion.identity, size, Event.current.type);
+				}
+
 				break;
 
 			case InspectorPlusVar.VectorDrawType.Point:
